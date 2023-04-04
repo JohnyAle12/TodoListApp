@@ -7,18 +7,7 @@ import { Todo } from "./types/types"
 
 function App() {
 
-  const [todo, setTodo] = useState<Todo[]>([
-    {
-      id: 1,
-      title: 'Arreglar el jardin',
-      completed: false
-    },
-    {
-      id: 2,
-      title: 'Sacar la basura',
-      completed: true
-    }
-  ]);
+  const [todo, setTodo] = useState<Todo[]>([]);
 
   const addTodo = (title: string) => {
     const newId = todo.length > 0 ? (todo[todo.length -1].id) + 1 : 1;
@@ -43,16 +32,21 @@ function App() {
       return item
     })
     setTodo(updatedList)
-}
+  }
+
+  const removeTodo = (id: number) => {
+    const updatedList = todo.filter(item => item.id !== id);
+    setTodo(updatedList);
+  }
 
   return (
-    <div className="bg-gray-900 min-h-screen h-full text-gray-100 flex items-center justify-center py-20 px-5">
+    <div className="bg-gray-800 min-h-screen h-full text-gray-100 flex items-center justify-center py-20 px-5">
       <div className="container flex flex-col max-w-xl">
         <Title />
         <Input addTodo={addTodo} />
         <List>
           { todo.map((item) => (
-            <TodoItem key={item.id} todo={item} completedTodo={completedTodo} />
+            <TodoItem key={item.id} todo={item} completedTodo={completedTodo} removeTodo={removeTodo} />
           )) }
         </List>
       </div>

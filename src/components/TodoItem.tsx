@@ -3,9 +3,10 @@ import { Todo } from '../types/types'
 type Props = {
   todo: Todo,
   completedTodo: (id: number) => void
+  removeTodo: (id: number) => void
 }
 
-export const TodoItem = ({todo, completedTodo}: Props) => {
+export const TodoItem = ({todo, completedTodo, removeTodo}: Props) => {
   const { id, title, completed } = todo;
   return (
     <div className="flex items-center justify-between p-4 bg-gray-700 border-b border-solid border-gray-600">
@@ -22,7 +23,7 @@ export const TodoItem = ({todo, completedTodo}: Props) => {
             }
             <p className={"pl-3 " + (completed && "line-through")}>{ title }</p>
         </div>
-        <img className="h-5 w-5 cursor-pointer transition-all duration-300 ease-in" src="/close-icon.svg" alt="Close Icon" />
+        <img onClick={() => removeTodo(id)} className="h-5 w-5 cursor-pointer transition-all duration-300 ease-in" src="/close-icon.svg" alt="Close Icon" />
     </div>
   )
 }
