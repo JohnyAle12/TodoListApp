@@ -1,5 +1,7 @@
+import { ReactNode } from "react"
+
 type Props = {
-    children: JSX.Element[]
+    children: ReactNode,
 }
 
 export const List = ({children}: Props) => {
