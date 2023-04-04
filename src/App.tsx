@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "./components/Input"
 import { List } from "./components/List"
 import { Title } from "./components/Title"
@@ -14,14 +14,16 @@ function App() {
 
   const addTodo = (title: string) => {
     const newId = todo.length > 0 ? (todo[todo.length -1].id) + 1 : 1;
-    setTodo([
+    const updatedList = [
       ...todo,
       {
         id: newId,
         title,
         completed: false
       }
-    ])
+    ]
+    setTodo(updatedList)
+    updateStorage(updatedList)
   }
 
   const completedTodo = (id: number) => {
@@ -35,17 +37,31 @@ function App() {
       return item
     })
     setTodo(updatedList)
+    updateStorage(updatedList)
   }
 
   const removeTodo = (id: number) => {
     const updatedList = todo.filter(item => item.id !== id);
     setTodo(updatedList);
+    updateStorage(updatedList)
   }
 
   const clearListCompleted = () => {
-    const updatedList = todo.filter(item => item.completed === false);
+    const updatedList = todo.filter(item => !item.completed);
     setTodo(updatedList);
+    updateStorage(updatedList)
   }
+
+  const updateStorage = (updatedList: Todo[]) => {
+    window.localStorage.setItem('todos', JSON.stringify(updatedList));
+  }
+
+  useEffect(() => {
+    const updatedList = JSON.parse(window.localStorage.getItem('todos') ?? '[]');
+    setTodo(updatedList);
+  }, [])
+  
+  
 
   return (
     <div className="bg-gray-800 min-h-screen h-full text-gray-100 flex items-center justify-center py-20 px-5">
