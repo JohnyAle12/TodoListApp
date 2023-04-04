@@ -2,8 +2,8 @@ import { Todo } from '../types/types'
 
 type Props = {
   todo: Todo,
-  completedTodo: (id: number) => void
-  removeTodo: (id: number) => void
+  completedTodo: (todo: Todo) => void
+  removeTodo: (todo: Todo) => void
 }
 
 export const TodoItem = ({todo, completedTodo, removeTodo}: Props) => {
@@ -14,16 +14,16 @@ export const TodoItem = ({todo, completedTodo, removeTodo}: Props) => {
             {
               completed ? 
               (
-                <div onClick={() => completedTodo(id)} className="bg-green-700 p-1 rounded-full cursor-pointer">
+                <div onClick={() => completedTodo(todo)} className="bg-green-700 p-1 rounded-full cursor-pointer">
                   <img className="h-4 w-4 " src="/check-icon.svg" alt="Check Icon" />
                 </div>
               ): (
-                <span onClick={() => completedTodo(id)} className="border border-gray-500 border-solid p-3 rounded-full cursor-pointer"></span>
+                <span onClick={() => completedTodo(todo)} className="border border-gray-500 border-solid p-3 rounded-full cursor-pointer"></span>
               )
             }
             <p className={"pl-3 " + (completed && "line-through")}>{ title }</p>
         </div>
-        <img onClick={() => removeTodo(id)} className="h-5 w-5 cursor-pointer transition-all duration-300 ease-in" src="/close-icon.svg" alt="Close Icon" />
+        <img onClick={() => removeTodo(todo)} className="h-5 w-5 cursor-pointer transition-all duration-300 ease-in" src="/close-icon.svg" alt="Close Icon" />
     </div>
   )
 }
